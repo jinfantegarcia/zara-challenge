@@ -64,4 +64,27 @@ describe('getProductById', () => {
     await expect(promise).rejects.toBeInstanceOf(ApiError);
     await expect(promise).rejects.toMatchObject({ status: 404 });
   });
+
+  it('wraps low-level network failures in a statusless ApiError', async () => {
+    server.use(http.get(`${API_TEST_URL}/products/:id`, () => HttpResponse.error()));
+
+    const promise = getProductById('SMG-S24U');
+
+    await expect(promise).rejects.toBeInstanceOf(ApiError);
+    await expect(promise).rejects.toMatchObject({ status: undefined });
+  });
+
+  it('fails fast with a configuration error when the API env vars are missing', async () => {
+    const previousBaseUrl = process.env.API_BASE_URL;
+    const previousKey = process.env.API_KEY;
+    delete process.env.API_BASE_URL;
+    delete process.env.API_KEY;
+
+    try {
+      await expect(getProductById('SMG-S24U')).rejects.toThrow(/Missing API_BASE_URL or API_KEY/);
+    } finally {
+      process.env.API_BASE_URL = previousBaseUrl;
+      process.env.API_KEY = previousKey;
+    }
+  });
 });
