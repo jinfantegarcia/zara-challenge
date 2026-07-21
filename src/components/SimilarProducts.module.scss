@@ -1,14 +1,19 @@
 @use '../styles/breakpoints' as *;
 
 .section {
-  margin-top: 2.5rem; // 40px
-  padding-bottom: 6.5rem; // 104px
+  margin-top: 5rem;
+  padding-bottom: 5rem;
+
+  @include from($bp-desktop) {
+    margin-top: 9.375rem;
+    padding-bottom: 6.5rem;
+  }
 }
 
 .heading {
   font-weight: var(--font-weight-light);
   font-size: var(--font-size-xl); // 20px
-  margin-bottom: var(--space-2xl); // 40px
+  margin-bottom: 2.5rem;
 }
 
 .list {

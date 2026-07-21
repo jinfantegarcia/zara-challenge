@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 import type { ReactNode } from 'react';
 import { CartProvider } from '@/context/CartContext';
 import Header from '@/components/Header';
@@ -17,6 +18,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           <Header />
           {children}
         </CartProvider>
+        <Analytics />
       </body>
     </html>
   );

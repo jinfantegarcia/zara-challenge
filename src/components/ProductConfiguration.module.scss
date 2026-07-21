@@ -37,20 +37,28 @@
 
 .name {
   font-weight: var(--font-weight-light);
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-xl);
   text-transform: uppercase;
+
+  @include from($bp-desktop) {
+    font-size: var(--font-size-2xl);
+  }
 }
 
 .price {
   margin-top: 0.6875rem;
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-md);
+
+  @include from($bp-desktop) {
+    font-size: var(--font-size-xl);
+  }
 }
 
 .addButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 2.5rem;
+  margin-top: 4.125rem;
   height: 3rem;
   background-color: var(--color-background-disabled);
   color: var(--color-content-disabled);
