@@ -1,0 +1,8 @@
+$bp-tablet: 768px;
+$bp-desktop: 1280px;
+
+@mixin from($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
