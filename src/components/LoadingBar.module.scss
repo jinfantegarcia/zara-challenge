@@ -1,0 +1,36 @@
+.track {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  height: 1px;
+  overflow: hidden;
+  z-index: var(--z-header);
+}
+
+.bar {
+  position: absolute;
+  top: 0;
+  left: -30%;
+  width: 30%;
+  height: 100%;
+  background-color: var(--color-content-high);
+  animation: sweep 1.2s ease-in-out infinite;
+}
+
+@keyframes sweep {
+  0% {
+    left: -30%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar {
+    animation: none;
+    left: 0;
+    width: 100%;
+  }
+}

@@ -7,16 +7,18 @@
   height: var(--header-height);
   padding-inline: var(--space-md);
   background-color: var(--color-background);
-  border-bottom: var(--border-thin);
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: var(--z-header);
+  transform: translateZ(0);
+  will-change: transform;
 
   @include from($bp-tablet) {
-    padding-inline: var(--space-xl);
+    padding-inline: 2.5rem; // 40px, Figma tablet gutter
   }
 
   @include from($bp-desktop) {
-    padding-inline: 6.25rem;
+    padding-inline: 6.25rem; // 100px, Figma desktop gutter
   }
 }
 
