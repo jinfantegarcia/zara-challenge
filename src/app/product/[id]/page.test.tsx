@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
+import { CartProvider } from '@/context/CartContext';
 import { productDetailFixture } from '@/test/mocks/fixtures/products';
 import ProductDetailPage from './page';
 
@@ -7,13 +8,17 @@ const minimumStoragePrice = Math.min(
   ...productDetailFixture.storageOptions.map((option) => option.price),
 );
 
+function renderDetail(ui: Awaited<ReturnType<typeof ProductDetailPage>>) {
+  return render(<CartProvider>{ui}</CartProvider>);
+}
+
 describe('ProductDetailPage', () => {
   it('renders the requested product name and image without a visible brand on a direct request', async () => {
     const ui = await ProductDetailPage({
       params: Promise.resolve({ id: productDetailFixture.id }),
       searchParams: Promise.resolve({}),
     });
-    render(ui);
+    renderDetail(ui);
 
     expect(
       screen.getByRole('heading', { level: 1, name: productDetailFixture.name }),
@@ -31,7 +36,7 @@ describe('ProductDetailPage', () => {
       params: Promise.resolve({ id: productDetailFixture.id }),
       searchParams: Promise.resolve({}),
     });
-    render(ui);
+    renderDetail(ui);
 
     expect(screen.getByText(`From ${minimumStoragePrice} EUR`)).toBeInTheDocument();
   });
@@ -41,7 +46,7 @@ describe('ProductDetailPage', () => {
       params: Promise.resolve({ id: productDetailFixture.id }),
       searchParams: Promise.resolve({}),
     });
-    render(ui);
+    renderDetail(ui);
 
     expect(screen.getByRole('link', { name: /back/i })).toHaveAttribute('href', '/');
   });
@@ -51,7 +56,7 @@ describe('ProductDetailPage', () => {
       params: Promise.resolve({ id: productDetailFixture.id }),
       searchParams: Promise.resolve({ search: 'pixel' }),
     });
-    render(ui);
+    renderDetail(ui);
 
     expect(screen.getByRole('link', { name: /back/i })).toHaveAttribute('href', '/?search=pixel');
   });
