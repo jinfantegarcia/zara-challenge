@@ -116,6 +116,21 @@ describe('CartProvider', () => {
     consoleError.mockRestore();
   });
 
+  it('throws when the dispatch hook is used outside of a provider', () => {
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    function DispatchOnly() {
+      useCartDispatch();
+      return null;
+    }
+
+    expect(() => render(<DispatchOnly />)).toThrow(
+      'useCartDispatch must be used within a CartProvider',
+    );
+
+    consoleError.mockRestore();
+  });
+
   it('removes exactly the entry at the given index, even among equal configurations', () => {
     const state = cartReducer([line, line], { type: 'REMOVE_ITEM', payload: { index: 0 } });
 
