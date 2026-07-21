@@ -29,3 +29,7 @@ _docs/
 .claude/
 .opencode/
 openspec/
+
+# AI workflow entry points (local only)
+AGENTS.md
+CLAUDE.md
