@@ -1,0 +1,18 @@
+:root {
+  // Design tokens (colors, spacing, breakpoints) are defined in the design-tokens task.
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  background-color: #fff;
+  color: #000;
+}
