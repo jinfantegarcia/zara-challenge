@@ -1,0 +1,44 @@
+@use '../styles/breakpoints' as *;
+
+.section {
+  margin-top: 2.5rem;
+}
+
+.heading {
+  font-weight: var(--font-weight-light);
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-2xl);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.row {
+  border-bottom: var(--border-thin);
+
+  &:first-child {
+    border-top: var(--border-thin);
+  }
+}
+
+.label,
+.value {
+  padding-block: var(--space-md);
+  font-weight: var(--font-weight-light);
+  font-size: var(--font-size-sm);
+  text-align: left;
+  vertical-align: top;
+}
+
+.label {
+  width: 9.375rem;
+  padding-right: var(--space-sm);
+  text-transform: uppercase;
+
+  @include from($bp-desktop) {
+    width: 18.75rem;
+    padding-right: var(--space-2xl);
+  }
+}

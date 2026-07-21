@@ -6,9 +6,11 @@ import styles from './ProductCard.module.scss';
 export default function ProductCard({
   product,
   search,
+  loading = 'lazy',
 }: {
   product: ProductListItem;
   search?: string;
+  loading?: 'lazy' | 'eager';
 }) {
   const href = search
     ? `/product/${encodeURIComponent(product.id)}?search=${encodeURIComponent(search)}`
@@ -21,6 +23,7 @@ export default function ProductCard({
           src={product.imageUrl}
           alt=""
           fill
+          loading={loading}
           sizes="(min-width: 1280px) 20vw, (min-width: 768px) 50vw, 100vw"
           className={styles.image}
         />
