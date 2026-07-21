@@ -1,0 +1,29 @@
+@use '../styles/breakpoints' as *;
+
+.section {
+  margin-top: 2.5rem; // 40px
+  padding-bottom: 6.5rem; // 104px
+}
+
+.heading {
+  font-weight: var(--font-weight-light);
+  font-size: var(--font-size-xl); // 20px
+  margin-bottom: var(--space-2xl); // 40px
+}
+
+.list {
+  display: flex;
+}
+
+.item {
+  flex: 0 0 auto;
+  width: 21.5rem; // 344px, Figma mobile/desktop
+
+  @include from($bp-tablet) {
+    width: 23.5625rem; // 377px, Figma tablet
+  }
+
+  @include from($bp-desktop) {
+    width: 21.5rem; // 344px
+  }
+}

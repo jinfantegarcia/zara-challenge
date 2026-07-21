@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import ProductConfiguration from '@/components/ProductConfiguration';
+import ProductSpecifications from '@/components/ProductSpecifications';
+import SimilarProducts from '@/components/SimilarProducts';
 import { getProductById } from '@/services/api';
 import styles from './page.module.scss';
 
@@ -54,6 +56,8 @@ export default async function ProductDetailPage({ params, searchParams }: Produc
             minPrice={fromPrice}
           />
         </div>
+        <ProductSpecifications product={product} />
+        <SimilarProducts products={product.similarProducts} search={search} />
       </div>
     </main>
   );

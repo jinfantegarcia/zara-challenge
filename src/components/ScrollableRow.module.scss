@@ -1,0 +1,27 @@
+.scroll {
+  overflow-x: auto;
+  border-top: var(--border-thin);
+  border-left: var(--border-thin);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.track {
+  position: relative;
+  margin-top: 2.5rem; // 40px, Figma gap (same as heading-to-carousel)
+  height: 0.25rem; // 4px, comfortable click/drag target
+  background-color: var(--color-content-low);
+  cursor: pointer;
+}
+
+.thumb {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background-color: var(--color-content-high);
+  pointer-events: none;
+}

@@ -20,10 +20,9 @@ describe('ProductDetailPage', () => {
     });
     renderDetail(ui);
 
-    expect(
-      screen.getByRole('heading', { level: 1, name: productDetailFixture.name }),
-    ).toBeInTheDocument();
-    expect(screen.queryByText(productDetailFixture.brand)).not.toBeInTheDocument();
+    const heading = screen.getByRole('heading', { level: 1, name: productDetailFixture.name });
+    expect(heading).toBeInTheDocument();
+    expect(heading.parentElement).not.toHaveTextContent(productDetailFixture.brand);
     expect(
       screen.getByAltText(`${productDetailFixture.brand} ${productDetailFixture.name}`),
     ).toBeInTheDocument();
@@ -59,5 +58,31 @@ describe('ProductDetailPage', () => {
     renderDetail(ui);
 
     expect(screen.getByRole('link', { name: /back/i })).toHaveAttribute('href', '/?search=pixel');
+  });
+
+  it('renders the specifications table from the server-fetched product', async () => {
+    const ui = await ProductDetailPage({
+      params: Promise.resolve({ id: productDetailFixture.id }),
+      searchParams: Promise.resolve({}),
+    });
+    renderDetail(ui);
+
+    expect(screen.getByRole('heading', { name: 'SPECIFICATIONS' })).toBeInTheDocument();
+    expect(screen.getByText(productDetailFixture.specs.processor)).toBeInTheDocument();
+  });
+
+  it('renders similar products carrying the active search into their detail links', async () => {
+    const ui = await ProductDetailPage({
+      params: Promise.resolve({ id: productDetailFixture.id }),
+      searchParams: Promise.resolve({ search: 'pixel' }),
+    });
+    renderDetail(ui);
+
+    expect(screen.getByRole('heading', { name: 'SIMILAR ITEMS' })).toBeInTheDocument();
+    const [firstSimilar] = productDetailFixture.similarProducts;
+    const link = screen.getByRole('link', {
+      name: `${firstSimilar!.brand} ${firstSimilar!.name}`,
+    });
+    expect(link).toHaveAttribute('href', `/product/${firstSimilar!.id}?search=pixel`);
   });
 });
