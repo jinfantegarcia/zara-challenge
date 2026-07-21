@@ -7,24 +7,24 @@
   background-color: var(--color-background);
   transform: translateZ(0);
   will-change: transform;
-  padding-inline: var(--space-md); // 16px, matches header gutter
-  padding-block: var(--space-sm); // 12px, Figma "Back" row
+  padding-inline: var(--space-md);
+  padding-block: var(--space-sm);
 
   @include from($bp-tablet) {
-    padding-inline: 2.5rem; // 40px, matches header gutter
+    padding-inline: 2.5rem;
   }
 
   @include from($bp-desktop) {
-    padding-inline: 6.25rem; // 100px, matches header gutter
+    padding-inline: 6.25rem;
   }
 }
 
 .back {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2xs); // 4px, Figma icon-to-label gap
+  gap: var(--space-2xs);
   color: var(--color-content-high);
-  font-size: var(--font-size-sm); // 12px
+  font-size: var(--font-size-sm);
   text-transform: uppercase;
 }
 
@@ -33,31 +33,26 @@
 }
 
 .content {
-  max-width: 75rem; // 1200px, Figma detail content width
+  max-width: 75rem;
   margin-inline: auto;
-  padding-inline: var(--space-md); // 16px mobile, matches header gutter
-  padding-block: 0.3125rem var(--space-2xl); // 5px top (Figma mobile), 48px bottom
+  padding-inline: var(--space-md);
+  padding-block: 0.3125rem var(--space-2xl);
 
   @include from($bp-tablet) {
-    padding-inline: 2.5rem; // 40px, matches header gutter
-    padding-block-start: var(
-      --space-2xl
-    ); // 48px, interpolated: tablet Figma frame omits the Back row
+    padding-inline: 2.5rem;
+    padding-block-start: var(--space-2xl);
   }
 
   @include from($bp-desktop) {
-    // Figma centers a 1200px column with 360px side margins on a 1920px
-    // canvas; max-width + auto margins reproduce that without adding to the
-    // header's 100px gutter.
     padding-inline: 0;
-    padding-block-start: 6.875rem; // 110px, Figma gap between Back and content
+    padding-block-start: 6.875rem;
   }
 }
 
 .productInfo {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem; // 40px, Figma mobile gap between image and info
+  gap: 2.5rem;
 
   @include from($bp-tablet) {
     flex-direction: row;
@@ -69,17 +64,17 @@
 
 .imageWrapper {
   position: relative;
-  width: 16.25rem; // 260px, Figma mobile
+  width: 16.25rem;
   aspect-ratio: 260 / 273;
 
   @include from($bp-tablet) {
-    width: 21.0625rem; // 337px
+    width: 21.0625rem;
     aspect-ratio: 337 / 416;
     flex-shrink: 0;
   }
 
   @include from($bp-desktop) {
-    width: 31.875rem; // 510px
+    width: 31.875rem;
     aspect-ratio: 510 / 630;
   }
 }
@@ -91,15 +86,14 @@
 .info {
   display: flex;
   flex-direction: column;
-  gap: 0.6875rem; // 11px, Figma gap between name and price
 
   @include from($bp-tablet) {
-    width: 22.625rem; // 362px
+    width: 22.625rem;
   }
 
   @include from($bp-desktop) {
-    width: 23.75rem; // 380px
-    padding-top: 5.34375rem; // 85.5px, Figma vertical offset against the image top
+    width: 23.75rem;
+    padding-top: 5.34375rem;
   }
 }
 
@@ -110,11 +104,8 @@
 }
 
 .name {
-  font-weight: var(--font-weight-light); // Figma uses Helvetica Neue Light; <h1> defaults to bold
-  font-size: var(--font-size-2xl); // 24px
+  margin-top: var(--space-2xs);
+  font-weight: var(--font-weight-light);
+  font-size: var(--font-size-2xl);
   text-transform: uppercase;
-}
-
-.price {
-  font-size: var(--font-size-xl); // 20px
 }

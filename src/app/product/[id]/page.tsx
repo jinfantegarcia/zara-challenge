@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import ProductConfiguration from '@/components/ProductConfiguration';
 import { getProductById } from '@/services/api';
 import styles from './page.module.scss';
 
@@ -58,9 +59,8 @@ export default async function ProductDetailPage({ params, searchParams }: Produc
             </div>
           )}
           <div className={styles.info}>
-            <p className={styles.brand}>{product.brand}</p>
             <h1 className={styles.name}>{product.name}</h1>
-            <p className={styles.price}>From {fromPrice} EUR</p>
+            <ProductConfiguration storageOptions={product.storageOptions} minPrice={fromPrice} />
           </div>
         </div>
       </div>
