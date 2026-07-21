@@ -3,13 +3,19 @@ import Link from 'next/link';
 import type { ProductListItem } from '@/types/product';
 import styles from './ProductCard.module.scss';
 
-export default function ProductCard({ product }: { product: ProductListItem }) {
+export default function ProductCard({
+  product,
+  search,
+}: {
+  product: ProductListItem;
+  search?: string;
+}) {
+  const href = search
+    ? `/product/${encodeURIComponent(product.id)}?search=${encodeURIComponent(search)}`
+    : `/product/${encodeURIComponent(product.id)}`;
+
   return (
-    <Link
-      href={`/product/${encodeURIComponent(product.id)}`}
-      aria-label={`${product.brand} ${product.name}`}
-      className={styles.card}
-    >
+    <Link href={href} aria-label={`${product.brand} ${product.name}`} className={styles.card}>
       <div className={styles.imageWrapper}>
         <Image
           src={product.imageUrl}

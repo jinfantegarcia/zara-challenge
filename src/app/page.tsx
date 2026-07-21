@@ -20,7 +20,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           {products.length} RESULTS
         </p>
       </div>
-      <ProductGrid products={products} />
+      <ProductGrid products={products} search={search} />
     </main>
   );
 }
