@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import ProductConfiguration from '@/components/ProductConfiguration';
 import { getProductById } from '@/services/api';
@@ -32,7 +31,6 @@ function ChevronLeftIcon() {
 export default async function ProductDetailPage({ params, searchParams }: ProductDetailPageProps) {
   const [{ id }, { search }] = await Promise.all([params, searchParams]);
   const product = await getProductById(id);
-  const image = product.colorOptions[0];
   const fromPrice = Math.min(...product.storageOptions.map((option) => option.price));
   const backHref = search ? `/?search=${encodeURIComponent(search)}` : '/';
 
@@ -46,22 +44,15 @@ export default async function ProductDetailPage({ params, searchParams }: Produc
       </div>
       <div className={styles.content}>
         <div className={styles.productInfo}>
-          {image && (
-            <div className={styles.imageWrapper}>
-              <Image
-                src={image.imageUrl}
-                alt={`${product.brand} ${product.name}`}
-                fill
-                priority
-                sizes="(min-width: 1280px) 510px, (min-width: 768px) 337px, 260px"
-                className={styles.image}
-              />
-            </div>
-          )}
-          <div className={styles.info}>
-            <h1 className={styles.name}>{product.name}</h1>
-            <ProductConfiguration storageOptions={product.storageOptions} minPrice={fromPrice} />
-          </div>
+          <ProductConfiguration
+            key={product.id}
+            productId={product.id}
+            name={product.name}
+            brand={product.brand}
+            storageOptions={product.storageOptions}
+            colorOptions={product.colorOptions}
+            minPrice={fromPrice}
+          />
         </div>
       </div>
     </main>

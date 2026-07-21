@@ -1,4 +1,72 @@
+@use '../styles/breakpoints' as *;
+
+.imageWrapper {
+  position: relative;
+  width: 16.25rem;
+  aspect-ratio: 260 / 273;
+
+  @include from($bp-tablet) {
+    width: 21.0625rem;
+    aspect-ratio: 337 / 416;
+    flex-shrink: 0;
+  }
+
+  @include from($bp-desktop) {
+    width: 31.875rem;
+    aspect-ratio: 510 / 630;
+  }
+}
+
+.image {
+  object-fit: cover;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+
+  @include from($bp-tablet) {
+    width: 22.625rem;
+  }
+
+  @include from($bp-desktop) {
+    width: 23.75rem;
+    padding-top: 5.34375rem;
+  }
+}
+
+.name {
+  font-weight: var(--font-weight-light);
+  font-size: var(--font-size-2xl);
+  text-transform: uppercase;
+}
+
 .price {
   margin-top: 0.6875rem;
   font-size: var(--font-size-xl);
+}
+
+.addButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2.5rem;
+  height: 3rem;
+  background-color: var(--color-background-disabled);
+  color: var(--color-content-disabled);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: not-allowed;
+
+  &:not(:disabled) {
+    background-color: var(--color-content-high);
+    color: var(--color-background);
+    cursor: pointer;
+  }
+
+  @include from($bp-desktop) {
+    margin-top: 4rem;
+    height: 3.5rem;
+  }
 }
