@@ -1,0 +1,144 @@
+@use '../../styles/breakpoints' as *;
+
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding-inline: var(--space-md);
+  padding-block: var(--space-lg) 9rem;
+
+  @include from($bp-tablet) {
+    gap: 3rem;
+    padding-inline: 2.5rem;
+    padding-block: 3rem 8rem;
+  }
+
+  @include from($bp-desktop) {
+    padding-inline: 6.25rem;
+    padding-block-end: 9.5rem;
+  }
+}
+
+.heading {
+  font-weight: var(--font-weight-light);
+  font-size: var(--font-size-xl);
+  text-transform: uppercase;
+
+  @include from($bp-desktop) {
+    padding-block: var(--space-sm);
+    font-size: var(--font-size-2xl);
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+
+  @include from($bp-tablet) {
+    gap: 3rem;
+  }
+}
+
+.footer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--z-header);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-lg) var(--space-sm);
+  background-color: var(--color-background);
+  padding-inline: var(--space-md);
+  padding-block: var(--space-md) var(--space-lg);
+  transform: translateZ(0);
+  will-change: transform;
+
+  @include from($bp-tablet) {
+    flex-wrap: nowrap;
+    gap: 0;
+    padding-inline: 2.5rem;
+    padding-block: var(--space-lg) 2.5rem;
+  }
+
+  @include from($bp-desktop) {
+    padding-inline: 6.25rem;
+    padding-block: var(--space-lg) 3.5rem;
+  }
+}
+
+.total {
+  display: flex;
+  order: 1;
+  flex-basis: 100%;
+  justify-content: space-between;
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-md);
+  text-transform: uppercase;
+
+  @include from($bp-tablet) {
+    order: 2;
+    flex-basis: auto;
+    justify-content: flex-start;
+    gap: var(--space-lg);
+    margin-right: 3.5rem;
+  }
+
+  @include from($bp-desktop) {
+    margin-right: 5rem;
+  }
+}
+
+.continue {
+  display: flex;
+  order: 2;
+  flex: 1 1 0%;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  border: 0.5px solid var(--color-content-high);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+
+  @include from($bp-tablet) {
+    order: 1;
+    flex: 0 0 12.5rem;
+    margin-right: auto;
+  }
+
+  @include from($bp-desktop) {
+    flex-basis: 16.25rem;
+    height: 3.5rem;
+  }
+}
+
+.pay {
+  display: flex;
+  order: 3;
+  flex: 0 0 10.90625rem;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  background-color: var(--color-content-high);
+  color: var(--color-background);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  @include from($bp-tablet) {
+    flex-basis: 16.25rem;
+  }
+
+  @include from($bp-desktop) {
+    height: 3.5rem;
+  }
+}

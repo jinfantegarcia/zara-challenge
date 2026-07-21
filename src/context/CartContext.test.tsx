@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { CartLine } from '@/types/cart';
-import { CartProvider, useCart, useCartDispatch } from './CartContext';
+import { CartProvider, cartReducer, useCart, useCartDispatch } from './CartContext';
 
 const STORAGE_KEY = 'smartphone-store:cart:v1';
 
@@ -16,6 +16,16 @@ const line: CartLine = {
   price: 999,
 };
 
+const otherLine: CartLine = {
+  productId: 'p2',
+  name: 'Phone Two',
+  brand: 'Brand',
+  imageUrl: 'https://example.com/p2.jpg',
+  capacity: '256GB',
+  colorName: 'White',
+  price: 1099,
+};
+
 function TestConsumer() {
   const cart = useCart();
   const dispatch = useCartDispatch();
@@ -24,18 +34,7 @@ function TestConsumer() {
     <div>
       <span data-testid="count">{cart.length}</span>
       <button onClick={() => dispatch({ type: 'ADD_ITEM', payload: line })}>Add</button>
-      <button
-        onClick={() =>
-          dispatch({
-            type: 'REMOVE_ITEM',
-            payload: {
-              productId: line.productId,
-              capacity: line.capacity,
-              colorName: line.colorName,
-            },
-          })
-        }
-      >
+      <button onClick={() => dispatch({ type: 'REMOVE_ITEM', payload: { index: 0 } })}>
         Remove
       </button>
     </div>
@@ -115,5 +114,37 @@ describe('CartProvider', () => {
     expect(() => render(<TestConsumer />)).toThrow();
 
     consoleError.mockRestore();
+  });
+
+  it('removes exactly the entry at the given index, even among equal configurations', () => {
+    const state = cartReducer([line, line], { type: 'REMOVE_ITEM', payload: { index: 0 } });
+
+    expect(state).toEqual([line]);
+  });
+
+  it('leaves state untouched for an out-of-range index', () => {
+    const state = cartReducer([line], { type: 'REMOVE_ITEM', payload: { index: 5 } });
+
+    expect(state).toEqual([line]);
+  });
+
+  it('syncs state when another tab updates the persisted cart', async () => {
+    renderWithProvider();
+    await screen.findByTestId('count');
+
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify([line, otherLine]));
+    window.dispatchEvent(new StorageEvent('storage', { key: STORAGE_KEY }));
+
+    expect(await screen.findByTestId('count')).toHaveTextContent('2');
+  });
+
+  it('ignores storage events for unrelated keys', async () => {
+    renderWithProvider();
+    await screen.findByTestId('count');
+
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify([line, otherLine]));
+    window.dispatchEvent(new StorageEvent('storage', { key: 'unrelated-key' }));
+
+    expect(screen.getByTestId('count')).toHaveTextContent('0');
   });
 });

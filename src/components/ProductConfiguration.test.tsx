@@ -1,9 +1,13 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import type { ComponentProps } from 'react';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { CartProvider, useCart } from '@/context/CartContext';
 import type { ColorOption, StorageOption } from '@/types/product';
 import ProductConfiguration from './ProductConfiguration';
+
+const { push } = vi.hoisted(() => ({ push: vi.fn() }));
+
+vi.mock('next/navigation', () => ({ useRouter: () => ({ push }) }));
 
 const storageOptions: StorageOption[] = [
   { capacity: '256 GB', price: 1229 },
@@ -46,6 +50,7 @@ function renderConfiguration(props: Partial<ComponentProps<typeof ProductConfigu
 describe('ProductConfiguration', () => {
   beforeEach(() => {
     window.localStorage.clear();
+    push.mockClear();
   });
 
   it('shows the "From" minimum price with no storage selected', () => {
@@ -128,6 +133,26 @@ describe('ProductConfiguration', () => {
         expectedLine,
       ]);
     });
+  });
+
+  it('never navigates when AÑADIR is clicked while disabled', () => {
+    renderConfiguration();
+
+    fireEvent.click(screen.getByRole('button', { name: 'AÑADIR' }));
+
+    expect(push).not.toHaveBeenCalled();
+  });
+
+  it('appends the complete line before navigating to /cart on enabled AÑADIR', () => {
+    renderConfiguration();
+
+    fireEvent.click(screen.getByRole('radio', { name: '512 GB' }));
+    fireEvent.click(screen.getByRole('radio', { name: 'Titanium Black' }));
+    fireEvent.click(screen.getByRole('button', { name: 'AÑADIR' }));
+
+    expect(screen.getByTestId('cart-count')).toHaveTextContent('1');
+    expect(push).toHaveBeenCalledTimes(1);
+    expect(push).toHaveBeenCalledWith('/cart');
   });
 
   it('creates independent lines when the same configuration is added twice', () => {
