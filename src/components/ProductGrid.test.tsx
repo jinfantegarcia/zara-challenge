@@ -41,13 +41,14 @@ describe('ProductGrid', () => {
     expect(screen.getAllByRole('listitem')).toHaveLength(20);
   });
 
-  it("renders each product's brand, name, price and image", () => {
+  it("renders each product's brand, name and price, and links to its detail page", () => {
     render(<ProductGrid products={productListFixture} />);
 
     expect(screen.getByText(firstProduct.brand)).toBeInTheDocument();
     expect(screen.getByText(firstProduct.name)).toBeInTheDocument();
     expect(screen.getByText(`${firstProduct.basePrice} EUR`)).toBeInTheDocument();
 
-    expect(screen.getByAltText(`${firstProduct.brand} ${firstProduct.name}`)).toBeInTheDocument();
+    const link = screen.getByRole('link', { name: `${firstProduct.brand} ${firstProduct.name}` });
+    expect(link).toHaveAttribute('href', `/product/${firstProduct.id}`);
   });
 });

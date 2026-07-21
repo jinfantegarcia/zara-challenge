@@ -14,17 +14,55 @@ vi.mock('@/services/api', async () => {
   };
 });
 
+vi.mock('next/navigation', () => ({
+  usePathname: () => '/',
+  useRouter: () => ({ replace: vi.fn() }),
+  useSearchParams: () => new URLSearchParams(),
+}));
+
 describe('HomePage', () => {
-  it('requests the default limit and renders every returned product', async () => {
+  it('requests the default limit and renders every returned product when no search is given', async () => {
     getProductsMock.mockResolvedValue(productListFixture);
 
-    const ui = await HomePage();
+    const ui = await HomePage({ searchParams: Promise.resolve({}) });
     render(ui);
 
-    expect(getProductsMock).toHaveBeenCalledWith({ limit: DEFAULT_LIST_LIMIT });
+    expect(getProductsMock).toHaveBeenCalledWith({ limit: DEFAULT_LIST_LIMIT, search: undefined });
     expect(screen.getAllByRole('listitem')).toHaveLength(productListFixture.length);
-    productListFixture.forEach((product) => {
-      expect(screen.getAllByText(product.name).length).toBeGreaterThan(0);
+    expect(screen.getByText(`${productListFixture.length} RESULTS`)).toHaveAttribute(
+      'aria-live',
+      'polite',
+    );
+  });
+
+  it('passes a non-empty search query to the product service', async () => {
+    getProductsMock.mockResolvedValue(productListFixture);
+
+    const ui = await HomePage({ searchParams: Promise.resolve({ search: 'pixel' }) });
+    render(ui);
+
+    expect(getProductsMock).toHaveBeenCalledWith({
+      limit: DEFAULT_LIST_LIMIT,
+      search: 'pixel',
     });
+  });
+
+  it('restores the default request when the search value is empty or whitespace', async () => {
+    getProductsMock.mockResolvedValue(productListFixture);
+
+    const ui = await HomePage({ searchParams: Promise.resolve({ search: '   ' }) });
+    render(ui);
+
+    expect(getProductsMock).toHaveBeenCalledWith({ limit: DEFAULT_LIST_LIMIT, search: undefined });
+  });
+
+  it('renders no product cards and "0 RESULTS" when the search has no matches', async () => {
+    getProductsMock.mockResolvedValue([]);
+
+    const ui = await HomePage({ searchParams: Promise.resolve({ search: 'nonexistent' }) });
+    render(ui);
+
+    expect(screen.queryAllByRole('listitem')).toHaveLength(0);
+    expect(screen.getByText('0 RESULTS')).toBeInTheDocument();
   });
 });

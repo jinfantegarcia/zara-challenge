@@ -1,14 +1,19 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import type { ProductListItem } from '@/types/product';
 import styles from './ProductCard.module.scss';
 
 export default function ProductCard({ product }: { product: ProductListItem }) {
   return (
-    <div className={styles.card}>
+    <Link
+      href={`/product/${encodeURIComponent(product.id)}`}
+      aria-label={`${product.brand} ${product.name}`}
+      className={styles.card}
+    >
       <div className={styles.imageWrapper}>
         <Image
           src={product.imageUrl}
-          alt={`${product.brand} ${product.name}`}
+          alt=""
           fill
           sizes="(min-width: 1280px) 20vw, (min-width: 768px) 50vw, 100vw"
           className={styles.image}
@@ -21,6 +26,6 @@ export default function ProductCard({ product }: { product: ProductListItem }) {
         </div>
         <p className={styles.price}>{product.basePrice} EUR</p>
       </div>
-    </div>
+    </Link>
   );
 }
