@@ -16,7 +16,7 @@ const STORAGE_KEY = 'smartphone-store:cart:v1';
 export type CartAction =
   | { type: 'HYDRATE'; payload: CartLine[] }
   | { type: 'ADD_ITEM'; payload: CartLine }
-  | { type: 'REMOVE_ITEM'; payload: { productId: string; capacity: string; colorName: string } };
+  | { type: 'REMOVE_ITEM'; payload: { index: number } };
 
 const CartStateContext = createContext<CartLine[] | undefined>(undefined);
 const CartDispatchContext = createContext<Dispatch<CartAction> | undefined>(undefined);
@@ -28,13 +28,8 @@ export function cartReducer(state: CartLine[], action: CartAction): CartLine[] {
     case 'ADD_ITEM':
       return [...state, action.payload];
     case 'REMOVE_ITEM': {
-      const index = state.findIndex(
-        (line) =>
-          line.productId === action.payload.productId &&
-          line.capacity === action.payload.capacity &&
-          line.colorName === action.payload.colorName,
-      );
-      if (index === -1) {
+      const { index } = action.payload;
+      if (index < 0 || index >= state.length) {
         return state;
       }
       return [...state.slice(0, index), ...state.slice(index + 1)];
@@ -99,6 +94,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
     writePersistedCart(state);
   }, [state]);
+
+  useEffect(() => {
+    function handleStorage(event: StorageEvent) {
+      if (event.key !== STORAGE_KEY) {
+        return;
+      }
+      dispatch({ type: 'HYDRATE', payload: readPersistedCart() });
+    }
+
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
 
   return (
     <CartStateContext.Provider value={state}>

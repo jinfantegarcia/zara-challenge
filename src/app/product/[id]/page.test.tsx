@@ -1,8 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { CartProvider } from '@/context/CartContext';
 import { productDetailFixture } from '@/test/mocks/fixtures/products';
 import ProductDetailPage from './page';
+
+vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn() }) }));
 
 const minimumStoragePrice = Math.min(
   ...productDetailFixture.storageOptions.map((option) => option.price),

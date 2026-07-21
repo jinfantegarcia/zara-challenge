@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useCartDispatch } from '@/context/CartContext';
 import type { ColorOption, StorageOption } from '@/types/product';
@@ -26,6 +27,7 @@ export default function ProductConfiguration({
   const [selectedCapacity, setSelectedCapacity] = useState<string | undefined>(undefined);
   const [selectedColor, setSelectedColor] = useState<ColorOption | undefined>(undefined);
   const dispatch = useCartDispatch();
+  const router = useRouter();
 
   const selectedStorage = storageOptions.find((option) => option.capacity === selectedCapacity);
   const displayPrice = selectedStorage ? `${selectedStorage.price} EUR` : `From ${minPrice} EUR`;
@@ -49,6 +51,7 @@ export default function ProductConfiguration({
         price: selectedStorage.price,
       },
     });
+    router.push('/cart');
   }
 
   return (
