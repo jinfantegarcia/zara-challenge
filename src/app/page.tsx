@@ -1,7 +1,12 @@
-export default function HomePage() {
+import { getProducts, DEFAULT_LIST_LIMIT } from '@/services/api';
+import ProductGrid from '@/components/ProductGrid';
+
+export default async function HomePage() {
+  const products = await getProducts({ limit: DEFAULT_LIST_LIMIT });
+
   return (
     <main>
-      <h1>Smartphone Store</h1>
+      <ProductGrid products={products} />
     </main>
   );
 }
