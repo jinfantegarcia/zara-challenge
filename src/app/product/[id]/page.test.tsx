@@ -8,7 +8,7 @@ const minimumStoragePrice = Math.min(
 );
 
 describe('ProductDetailPage', () => {
-  it('renders the requested product brand, name and image on a direct request', async () => {
+  it('renders the requested product name and image without a visible brand on a direct request', async () => {
     const ui = await ProductDetailPage({
       params: Promise.resolve({ id: productDetailFixture.id }),
       searchParams: Promise.resolve({}),
@@ -18,7 +18,7 @@ describe('ProductDetailPage', () => {
     expect(
       screen.getByRole('heading', { level: 1, name: productDetailFixture.name }),
     ).toBeInTheDocument();
-    expect(screen.getByText(productDetailFixture.brand)).toBeInTheDocument();
+    expect(screen.queryByText(productDetailFixture.brand)).not.toBeInTheDocument();
     expect(
       screen.getByAltText(`${productDetailFixture.brand} ${productDetailFixture.name}`),
     ).toBeInTheDocument();

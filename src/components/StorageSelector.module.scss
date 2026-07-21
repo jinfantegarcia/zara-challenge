@@ -1,0 +1,73 @@
+@use '../styles/breakpoints' as *;
+
+.fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 2.5rem; // 40px, Figma mobile/tablet gap from Title+price
+
+  @include from($bp-desktop) {
+    margin-top: 4rem; // 64px, Figma desktop gap
+  }
+}
+
+.legend {
+  padding: 0;
+  margin: 0 0 1.25rem; // 20px, Figma mobile/tablet gap to options row
+  font-size: var(--font-size-sm); // 12px
+  text-transform: uppercase;
+
+  @include from($bp-desktop) {
+    margin-bottom: var(--space-lg); // 24px, Figma desktop gap
+    font-size: var(--font-size-md); // 14px
+  }
+}
+
+.options {
+  display: flex;
+}
+
+.option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem; // 48px, Figma mobile/tablet
+  padding-inline: var(--space-lg); // 24px
+  margin-left: -1px;
+  border: 1px solid var(--color-content-low);
+  font-size: var(--font-size-sm); // 12px
+  cursor: pointer;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &.selected {
+    z-index: 1;
+    border-color: var(--color-content-high);
+  }
+
+  &:has(.input:focus-visible) {
+    z-index: 1;
+    outline: 2px solid var(--color-content-high);
+    outline-offset: 2px;
+  }
+
+  @include from($bp-desktop) {
+    height: 4.0625rem; // 65px, Figma desktop
+    font-size: var(--font-size-md); // 14px
+  }
+}
+
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
