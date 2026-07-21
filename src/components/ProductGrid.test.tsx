@@ -51,4 +51,11 @@ describe('ProductGrid', () => {
     const link = screen.getByRole('link', { name: `${firstProduct.brand} ${firstProduct.name}` });
     expect(link).toHaveAttribute('href', `/product/${firstProduct.id}`);
   });
+
+  it('includes the active search query in the detail link when present', () => {
+    render(<ProductGrid products={productListFixture} search="pixel" />);
+
+    const link = screen.getByRole('link', { name: `${firstProduct.brand} ${firstProduct.name}` });
+    expect(link).toHaveAttribute('href', `/product/${firstProduct.id}?search=pixel`);
+  });
 });
