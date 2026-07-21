@@ -3,6 +3,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
+  margin-top: var(--space-lg);
 
   &:not(:empty) {
     border-top: var(--border-thin);
@@ -15,5 +16,6 @@
 
   @include from($bp-desktop) {
     grid-template-columns: repeat(5, 1fr);
+    margin-top: var(--space-sm);
   }
 }

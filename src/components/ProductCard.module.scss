@@ -11,10 +11,24 @@
   padding: var(--space-md);
   border-right: var(--border-thin);
   border-bottom: var(--border-thin);
-  transition: background-color var(--transition-fast);
+  background-image: linear-gradient(var(--color-content-high), var(--color-content-high));
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: 100% 0;
+  transition:
+    background-size var(--transition-card),
+    color var(--transition-card);
 
-  &:hover {
-    background-color: var(--color-background-mid);
+  &:focus-visible {
+    background-size: 100% 100%;
+    color: var(--color-background);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    background-size: 100% 100%;
+    color: var(--color-background);
   }
 }
 
@@ -50,7 +64,18 @@
   font-size: var(--font-size-xs);
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: color var(--transition-card);
   white-space: nowrap;
+
+  .card:focus-visible & {
+    color: var(--color-content-inverse-mid);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .card:hover & {
+      color: var(--color-content-inverse-mid);
+    }
+  }
 }
 
 .name {
@@ -65,4 +90,11 @@
   font-size: var(--font-size-sm);
   text-align: right;
   white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .brand {
+    transition-duration: 0ms;
+  }
 }

@@ -3,6 +3,7 @@
   --color-content-high: #000;
   --color-content-mid: rgba(0, 0, 0, 0.6);
   --color-content-low: rgba(0, 0, 0, 0.2);
+  --color-content-inverse-mid: rgba(255, 255, 255, 0.6);
   --color-background: #fff;
   --color-background-mid: #ebebeb;
   --color-background-disabled: #f3f2f2;
@@ -40,6 +41,7 @@
 
   // Motion
   --transition-fast: 150ms ease;
+  --transition-card: 200ms ease;
 
   // Z-index
   --z-header: 10;

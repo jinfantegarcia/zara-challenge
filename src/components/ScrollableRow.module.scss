@@ -12,10 +12,16 @@
 
 .track {
   position: relative;
-  margin-top: 2.5rem; // 40px, Figma gap (same as heading-to-carousel)
-  height: 0.25rem; // 4px, comfortable click/drag target
+  margin-top: 2.5rem;
+  height: 1px;
   background-color: var(--color-content-low);
   cursor: pointer;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -0.5rem 0;
+  }
 }
 
 .thumb {
