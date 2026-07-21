@@ -1,5 +1,7 @@
 # Smartphone Store
 
+**Live demo:** [zara-challenge-five.vercel.app](https://zara-challenge-five.vercel.app/)
+
 Web application to browse, search and manage a catalog of smartphones, built for the Inditex/Zara frontend challenge: a product list with real-time API search, a product detail with storage/color configuration and live pricing, and a persistent shopping cart.
 
 Built with **Next.js 15 (App Router) + React 19 + TypeScript** on **Node 18**, styled with **SCSS Modules + CSS variables**, state managed with the **React Context API**, and tested with **Vitest + Testing Library + MSW + axe**.
@@ -84,6 +86,12 @@ src/
 ```bash
 npm run test:coverage
 ```
+
+## Deployment
+
+Deployed on **Vercel** with the Next.js preset (SSR included): [zara-challenge-five.vercel.app](https://zara-challenge-five.vercel.app/). The `API_BASE_URL` and `API_KEY` environment variables are configured in the Vercel dashboard, so the key stays server-side in production too. Deep links (e.g. `/product/SMG-S24U?search=samsung`) survive refresh, all images are served over https, and the browser console stays free of errors and warnings.
+
+> First load after idle time may take up to ~60 s while the Render-hosted API cold-starts.
 
 ## Accessibility
 
