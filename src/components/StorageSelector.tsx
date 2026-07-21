@@ -1,5 +1,3 @@
-'use client';
-
 import type { StorageOption } from '@/types/product';
 import styles from './StorageSelector.module.scss';
 
