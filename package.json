@@ -21,7 +21,8 @@
   "dependencies": {
     "next": "^15.5.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.0",
@@ -39,6 +40,7 @@
     "husky": "^9.1.0",
     "jsdom": "^26.0.0",
     "lint-staged": "^15.2.0",
+    "msw": "^2.7.0",
     "prettier": "^3.3.0",
     "sass": "^1.77.0",
     "typescript": "^5.5.0",
