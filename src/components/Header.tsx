@@ -81,7 +81,11 @@ export default function Header() {
         <span className={styles.logoText}>MBST</span>
       </Link>
       {!isCartRoute && (
-        <Link href="/cart" className={styles.cart} aria-label={`Cart, ${cart.length} items`}>
+        <Link
+          href="/cart"
+          className={styles.cart}
+          aria-label={`Cart, ${cart.length} ${cart.length === 1 ? 'item' : 'items'}`}
+        >
           <BagIcon />
           <span aria-hidden="true">{cart.length}</span>
         </Link>

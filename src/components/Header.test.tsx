@@ -29,9 +29,32 @@ describe('Header', () => {
 
     renderHeader();
 
-    const cartLink = screen.getByRole('link', { name: /cart/i });
+    const cartLink = screen.getByRole('link', { name: 'Cart, 0 items' });
     expect(cartLink).toHaveAttribute('href', '/cart');
     expect(cartLink).toHaveTextContent('0');
+  });
+
+  it('uses a singular accessible label when the cart holds one unit', async () => {
+    usePathname.mockReturnValue('/');
+    window.localStorage.setItem(
+      'smartphone-store:cart:v1',
+      JSON.stringify([
+        {
+          productId: 'p1',
+          name: 'Galaxy S24 Ultra',
+          brand: 'Samsung',
+          imageUrl: 'https://example.com/a.jpg',
+          capacity: '512 GB',
+          colorName: 'Violeta Titanium',
+          price: 1199,
+        },
+      ]),
+    );
+
+    renderHeader();
+
+    expect(await screen.findByRole('link', { name: 'Cart, 1 item' })).toBeInTheDocument();
+    window.localStorage.clear();
   });
 
   it('omits the cart control on the /cart route', () => {
