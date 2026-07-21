@@ -1,0 +1,51 @@
+@use '../styles/breakpoints' as *;
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-height);
+  padding-inline: var(--space-md);
+  background-color: var(--color-background);
+  border-bottom: var(--border-thin);
+  position: relative;
+  z-index: var(--z-header);
+
+  @include from($bp-tablet) {
+    padding-inline: var(--space-xl);
+  }
+
+  @include from($bp-desktop) {
+    padding-inline: 6.25rem;
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  color: var(--color-content-high);
+}
+
+.logoMark {
+  flex-shrink: 0;
+}
+
+.logoText {
+  font-family: var(--font-family-base);
+  font-weight: 700;
+  font-size: var(--font-size-lg);
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.cart {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--color-content-high);
+}
+
+.bagIcon {
+  flex-shrink: 0;
+}
